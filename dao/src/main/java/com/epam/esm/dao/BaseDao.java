@@ -10,7 +10,7 @@ public interface BaseDao<T> {
 
     Optional<T> findByName(String name);
 
-    T insert(T obj);
+    boolean add(T obj);
 
     T update(T obj, Long id);
 

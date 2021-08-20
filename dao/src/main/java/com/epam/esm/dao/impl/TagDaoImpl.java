@@ -13,7 +13,10 @@ import java.util.Optional;
 @Repository
 public class TagDaoImpl implements TagDao {
     final static String SELECT_ALL_TAGS = "SELECT * FROM tags";
-
+    final static String SELECT_ONE_TAG = "SELECT * FROM tags WHERE id=?";
+    final static String ADD_TAG = "INSERT INTO tags (name) VALUES (?)";
+    final static String DELETE_TAG = "DELETE FROM tags WHERE id=?";
+    final static String SELECT_ONE_TAG_BY_NAME = "SELECT * FROM tags WHERE name=?";
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -29,26 +32,28 @@ public class TagDaoImpl implements TagDao {
 
     @Override
     public Optional<Tag> findOne(Long id) {
-        return Optional.empty();
+        return jdbcTemplate.query(SELECT_ONE_TAG, new TagRowMapper(), id).
+                stream().findAny();
     }
 
     @Override
-    public Optional<Tag> findByName(String name) {
-        return Optional.empty();
-    }
-
-    @Override
-    public Tag insert(Tag obj) {
-        return null;
+    public boolean add(Tag obj) {
+        return jdbcTemplate.update(ADD_TAG, obj.getName()) == 1;
     }
 
     @Override
     public Tag update(Tag obj, Long id) {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public boolean delete(Long id) {
-        return false;
+        return jdbcTemplate.update(DELETE_TAG, id) == 1;
+    }
+
+    @Override
+    public Optional<Tag> findByName(String name) {
+        return jdbcTemplate.query(SELECT_ONE_TAG_BY_NAME, new TagRowMapper(), name).
+                stream().findAny();
     }
 }
