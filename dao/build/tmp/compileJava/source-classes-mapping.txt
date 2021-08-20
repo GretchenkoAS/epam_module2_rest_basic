@@ -1,2 +1,10 @@
+com/epam/esm/dao/impl/TagDaoImpl.java
+ com.epam.esm.dao.impl.TagDaoImpl
+com/epam/esm/dao/TagDao.java
+ com.epam.esm.dao.TagDao
+com/epam/esm/dao/rowmapper/TagRowMapper.java
+ com.epam.esm.dao.rowmapper.TagRowMapper
 com/epam/esm/entity/Tag.java
  com.epam.esm.entity.Tag
+com/epam/esm/dao/BaseDao.java
+ com.epam.esm.dao.BaseDao

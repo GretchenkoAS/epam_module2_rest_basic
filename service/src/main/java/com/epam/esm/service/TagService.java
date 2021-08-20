@@ -1,19 +1,19 @@
 package com.epam.esm.service;
 
-import com.epam.esm.dto.TagDTO;
+import com.epam.esm.dto.TagDto;
 
 import java.util.List;
 
 public interface TagService {
-    TagDTO add(TagDTO tagDTO);
+    TagDto add(TagDto tagDTO);
 
-    TagDTO find(Long id);
+    TagDto find(Long id);
 
-    List<TagDTO> findAll();
+    List<TagDto> findAll();
 
-    TagDTO findByName(String name);
+    TagDto findByName(String name);
 
-    boolean exist(TagDTO tagDTO);
+    boolean exist(TagDto tagDTO);
 
     void delete(Long id);
 }

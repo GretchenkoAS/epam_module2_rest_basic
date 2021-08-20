@@ -1,2 +1,10 @@
-com/epam/esm/entity/Tag.java
- com.epam.esm.entity.Tag
+com/epam/esm/dto/TagDto.java
+ com.epam.esm.dto.TagDto
+com/epam/esm/service/impl/TagServiceImpl.java
+ com.epam.esm.service.impl.TagServiceImpl
+com/epam/esm/mapper/impl/TagMapper.java
+ com.epam.esm.mapper.impl.TagMapper
+com/epam/esm/mapper/Mapper.java
+ com.epam.esm.mapper.Mapper
+com/epam/esm/service/TagService.java
+ com.epam.esm.service.TagService
