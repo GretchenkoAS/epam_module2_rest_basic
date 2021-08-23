@@ -15,7 +15,7 @@ public interface GiftCertificateService {
 
     void delete(Long id);
 
-    GiftCertificateDto update(GiftCertificateDto giftCertificateDto, Long id);
+    void update(GiftCertificateDto giftCertificateDto, Long id);
 
     boolean exist(GiftCertificateDto giftCertificateDto, Long id);
 }

@@ -1,14 +1,11 @@
 package com.epam.esm.controller;
 
 import com.epam.esm.dto.GiftCertificateDto;
-import com.epam.esm.dto.TagDto;
 import com.epam.esm.service.GiftCertificateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -44,8 +41,8 @@ public class GiftCertificatesController {
     }
 
     @PutMapping("/{id}")
-    public GiftCertificateDto update(@RequestBody GiftCertificateDto updatedCertificateDto, @PathVariable Long id){
-        return giftCertificateService.update(updatedCertificateDto, id);
+    public void update(@RequestBody GiftCertificateDto updatedCertificateDto, @PathVariable Long id){
+        giftCertificateService.update(updatedCertificateDto, id);
     }
 
 }

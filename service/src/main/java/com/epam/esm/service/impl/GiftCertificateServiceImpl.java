@@ -83,12 +83,28 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
 
     @Override
     public boolean exist(GiftCertificateDto giftCertificateDto, Long id) {
-        return false;
+        Optional<GiftCertificate> certificateOptional = giftCertificateDao.findOne(id);
+        if (certificateOptional.isEmpty()) {
+            return false;
+        }
+        Optional<GiftCertificate> certificateByNameOptional = giftCertificateDao.findByName(giftCertificateDto.getName());
+        if (certificateByNameOptional.isPresent() &&
+                !certificateByNameOptional.get().getId().equals(giftCertificateDto.getId())) {
+            return false;
+        }
+        return true;
     }
 
     @Override
-    public GiftCertificateDto update(GiftCertificateDto giftCertificateDto, Long id) {
-        return null;
+    public void update(GiftCertificateDto giftCertificateDto, Long id) {
+        if (exist(giftCertificateDto, id)) {
+            //fixme add throw
+        }
+        if (giftCertificateDto.getTags() != null) {
+            giftCertificateDao.clearTags(giftCertificateDto.getId());
+        }
+        giftCertificateDao.update(mapper.mapDtoToEntity(giftCertificateDto), id);
+        addTags(id, giftCertificateDto.getTags());
     }
 
     private void addTags(Long giftCertificateId, List<TagDto> tags) {

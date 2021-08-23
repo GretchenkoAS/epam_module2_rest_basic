@@ -22,6 +22,7 @@ public class GiftCertificateDaoImpl implements GiftCertificateDao {
             " price, duration, create_date, last_update_date) VALUES (?, ?, ?, ?, ?, ?)";
     private final static String ADD_TAG_TO_GIFT_CERTIFICATE = "INSERT INTO tags_gift_certificates VALUES (?, ?)";
     private final static String CLEAR_GIFT_CERTIFICATE_TAGS = "DELETE FROM tags_gift_certificates WHERE gift_certificate_id=?";
+    private final static String UPDATE_GIFT_CERTIFICATE = "UPDATE gift_certificates SET name = ?, description = ?, price = ?, duration = ?, last_update_date = ? WHERE id =?";
     private final static String DELETE_GIFT_CERTIFICATE = "DELETE FROM gift_certificates WHERE id=?";
     private final static String SELECT_TAGS = "SELECT * FROM tags INNER JOIN tags_gift_certificates " +
             "ON tags.id = tags_gift_certificates.tag_id WHERE tags_gift_certificates.gift_certificate_id = ?";
@@ -59,7 +60,8 @@ public class GiftCertificateDaoImpl implements GiftCertificateDao {
 
     @Override
     public boolean update(GiftCertificate obj, Long id) {
-        return false;
+        return jdbcTemplate.update(UPDATE_GIFT_CERTIFICATE, obj.getName(), obj.getDescription(), obj.getPrice(),
+                obj.getDuration(), java.sql.Timestamp.valueOf(java.time.LocalDateTime.now()), id) == 1;
     }
 
     @Override
