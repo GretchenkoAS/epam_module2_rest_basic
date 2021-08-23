@@ -82,6 +82,11 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
     }
 
     @Override
+    public boolean exist(GiftCertificateDto giftCertificateDto, Long id) {
+        return false;
+    }
+
+    @Override
     public GiftCertificateDto update(GiftCertificateDto giftCertificateDto, Long id) {
         return null;
     }
