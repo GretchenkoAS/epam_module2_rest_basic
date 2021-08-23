@@ -26,7 +26,7 @@ public class TagServiceImpl implements TagService {
     @Override
     public TagDto find(Long id) {
         Optional<Tag> tagOptional = tagDao.findOne(id);
-        if (!tagOptional.isPresent()) {
+        if (tagOptional.isEmpty()) {
             //fixme add throw
         }
         return mapper.mapEntityToDto(tagOptional.get());
@@ -39,12 +39,18 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public void add(TagDto tagDTO) {
-        Tag tag = mapper.mapDtoToEntity(tagDTO);
+    public void add(TagDto tagDto) {
+        Tag tag = mapper.mapDtoToEntity(tagDto);
         if (tagDao.findByName(tag.getName()).isPresent()) {
             //fixme add throw
         }
         tagDao.add(tag);
+    }
+
+    @Override
+    public boolean exist(TagDto tagDto) {
+        Tag tag = mapper.mapDtoToEntity(tagDto);
+        return tagDao.findByName(tag.getName()).isPresent();
     }
 
     @Override
@@ -56,7 +62,7 @@ public class TagServiceImpl implements TagService {
     @Override
     public TagDto findByName(String name) {
         Optional<Tag> tagOptional = tagDao.findByName(name);
-        if (!tagOptional.isPresent()) {
+        if (tagOptional.isEmpty()) {
             //fixme add throw
         }
         return tagOptional.map(mapper::mapEntityToDto).get();

@@ -14,4 +14,6 @@ public interface TagService {
     TagDto findByName(String name);
 
     void delete(Long id);
+
+    boolean exist(TagDto tagDto);
 }

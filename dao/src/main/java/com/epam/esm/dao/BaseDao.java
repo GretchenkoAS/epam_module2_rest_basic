@@ -12,7 +12,7 @@ public interface BaseDao<T> {
 
     boolean add(T obj);
 
-    T update(T obj, Long id);
+    boolean update(T obj, Long id);
 
     boolean delete(Long id);
 }

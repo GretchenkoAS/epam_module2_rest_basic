@@ -918,87 +918,82 @@ SELECT|sys.sys_config
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="288" parent="284" name="tag_id">
+    <column id="288" parent="284" name="name">
       <Position>2</Position>
-      <DataType>bigint|0s</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="289" parent="284" name="name">
-      <Position>3</Position>
       <DataType>varchar(30)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="290" parent="284" name="description">
-      <Position>4</Position>
+    <column id="289" parent="284" name="description">
+      <Position>3</Position>
       <DataType>varchar(80)|0s</DataType>
     </column>
-    <column id="291" parent="284" name="price">
-      <Position>5</Position>
+    <column id="290" parent="284" name="price">
+      <Position>4</Position>
       <DataType>decimal(10)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="292" parent="284" name="duration">
-      <Position>6</Position>
+    <column id="291" parent="284" name="duration">
+      <Position>5</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="293" parent="284" name="create_date">
+    <column id="292" parent="284" name="create_date">
+      <Position>6</Position>
+      <DataType>timestamp|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="293" parent="284" name="last_update_date">
       <Position>7</Position>
-      <DataType>datetime|0s</DataType>
+      <DataType>timestamp|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="294" parent="284" name="last_update_date">
-      <Position>8</Position>
-      <DataType>datetime|0s</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <key id="295" parent="284" name="PRIMARY">
+    <key id="294" parent="284" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="296" parent="285" name="id">
+    <column id="295" parent="285" name="id">
       <Position>1</Position>
       <DataType>bigint|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="297" parent="285" name="name">
+    <column id="296" parent="285" name="name">
       <Position>2</Position>
       <DataType>varchar(30)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <key id="298" parent="285" name="PRIMARY">
+    <key id="297" parent="285" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="299" parent="286" name="tag_id">
+    <column id="298" parent="286" name="tag_id">
       <Position>1</Position>
       <DataType>bigint|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="300" parent="286" name="gift_certificate_id">
+    <column id="299" parent="286" name="gift_certificate_id">
       <Position>2</Position>
       <DataType>bigint|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="301" parent="286" name="gift_certificate_id">
+    <index id="300" parent="286" name="gift_certificate_id">
       <ColNames>gift_certificate_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="302" parent="286" name="PRIMARY">
+    <key id="301" parent="286" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>tag_id
 gift_certificate_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="303" parent="286" name="tags_gift_certificates_ibfk_1">
+    <foreign-key id="302" parent="286" name="tags_gift_certificates_ibfk_1">
       <ColNames>tag_id</ColNames>
       <RefTableName>tags</RefTableName>
       <RefColNames>id</RefColNames>
     </foreign-key>
-    <foreign-key id="304" parent="286" name="tags_gift_certificates_ibfk_2">
+    <foreign-key id="303" parent="286" name="tags_gift_certificates_ibfk_2">
       <ColNames>gift_certificate_id</ColNames>
       <RefTableName>gift_certificates</RefTableName>
       <RefColNames>id</RefColNames>

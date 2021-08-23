@@ -12,11 +12,11 @@ import java.util.Optional;
 
 @Repository
 public class TagDaoImpl implements TagDao {
-    final static String SELECT_ALL_TAGS = "SELECT * FROM tags";
-    final static String SELECT_ONE_TAG = "SELECT * FROM tags WHERE id=?";
-    final static String ADD_TAG = "INSERT INTO tags (name) VALUES (?)";
-    final static String DELETE_TAG = "DELETE FROM tags WHERE id=?";
-    final static String SELECT_ONE_TAG_BY_NAME = "SELECT * FROM tags WHERE name=?";
+    private final static String SELECT_ALL_TAGS = "SELECT * FROM tags";
+    private final static String SELECT_ONE_TAG = "SELECT * FROM tags WHERE id=?";
+    private final static String ADD_TAG = "INSERT INTO tags (name) VALUES (?)";
+    private final static String DELETE_TAG = "DELETE FROM tags WHERE id=?";
+    private final static String SELECT_ONE_TAG_BY_NAME = "SELECT * FROM tags WHERE name=?";
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -42,7 +42,7 @@ public class TagDaoImpl implements TagDao {
     }
 
     @Override
-    public Tag update(Tag obj, Long id) {
+    public boolean update(Tag obj, Long id) {
         throw new UnsupportedOperationException();
     }
 

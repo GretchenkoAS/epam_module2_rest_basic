@@ -1,0 +1,8 @@
+com/epam/esm/config/MvcDispatcherServletInitializer.java
+ com.epam.esm.config.MvcDispatcherServletInitializer
+com/epam/esm/controller/GiftCertificatesController.java
+ com.epam.esm.controller.GiftCertificatesController
+com/epam/esm/config/SpringConfig.java
+ com.epam.esm.config.SpringConfig
+com/epam/esm/controller/TagsController.java
+ com.epam.esm.controller.TagsController

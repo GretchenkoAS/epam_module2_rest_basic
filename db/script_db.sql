@@ -1,7 +1,6 @@
 DROP TABLE IF EXISTS `gift_certificates`;
 CREATE TABLE `gift_certificates` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `tag_id` bigint(20) NOT NULL,
   `name` varchar(30) NOT NULL,
   `description` varchar(80) DEFAULT NULL,
   `price` decimal NOT NULL,
