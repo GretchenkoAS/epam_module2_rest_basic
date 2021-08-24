@@ -27,17 +27,14 @@ import java.util.List;
 @PropertySource("classpath:application.properties")
 public class SpringConfig implements WebMvcConfigurer {
 
-    @Value("${database.driver}") String DATABASE_DRIVER;
-    @Value("${database.url}") String DATABASE_URL;
-    @Value("${database.username}") String DATABASE_USERNAME;
-    @Value("${database.password}") String DATABASE_PASSWORD;
-
-    private final ApplicationContext applicationContext;
-
-    @Autowired
-    public SpringConfig(ApplicationContext applicationContext) {
-        this.applicationContext = applicationContext;
-    }
+    @Value("${database.driver}")
+    private String DATABASE_DRIVER;
+    @Value("${database.url}")
+    private String DATABASE_URL;
+    @Value("${database.username}")
+    private String DATABASE_USERNAME;
+    @Value("${database.password}")
+    private String DATABASE_PASSWORD;
 
     @Bean
     public DataSource dataSource() {
@@ -50,8 +47,8 @@ public class SpringConfig implements WebMvcConfigurer {
     }
 
     @Bean
-    public JdbcTemplate jdbcTemplate() {
-        return new JdbcTemplate(dataSource());
+    public JdbcTemplate jdbcTemplate(DataSource dataSource) {
+        return new JdbcTemplate(dataSource);
     }
 
     @Override
