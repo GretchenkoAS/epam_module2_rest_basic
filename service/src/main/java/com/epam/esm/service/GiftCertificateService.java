@@ -1,11 +1,12 @@
 package com.epam.esm.service;
 
 import com.epam.esm.dto.GiftCertificateDto;
+import com.epam.esm.dto.QueryDto;
 
 import java.util.List;
 
 public interface GiftCertificateService {
-    void add(GiftCertificateDto giftCertificateDto);
+    GiftCertificateDto add(GiftCertificateDto giftCertificateDto);
 
     GiftCertificateDto find(Long id);
 
@@ -15,7 +16,9 @@ public interface GiftCertificateService {
 
     void delete(Long id);
 
-    void update(GiftCertificateDto giftCertificateDto, Long id);
+    GiftCertificateDto update(GiftCertificateDto giftCertificateDto, Long id);
 
     boolean exist(GiftCertificateDto giftCertificateDto, Long id);
+
+    List<GiftCertificateDto> findByQuery(QueryDto queryDto);
 }

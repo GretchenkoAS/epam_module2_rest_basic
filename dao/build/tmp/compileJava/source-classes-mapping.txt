@@ -8,6 +8,8 @@ com/epam/esm/dao/rowmapper/TagRowMapper.java
  com.epam.esm.dao.rowmapper.TagRowMapper
 com/epam/esm/entity/GiftCertificate.java
  com.epam.esm.entity.GiftCertificate
+com/epam/esm/entity/Query.java
+ com.epam.esm.entity.Query
 com/epam/esm/dao/rowmapper/GiftCertificateRowMapper.java
  com.epam.esm.dao.rowmapper.GiftCertificateRowMapper
 com/epam/esm/entity/Tag.java

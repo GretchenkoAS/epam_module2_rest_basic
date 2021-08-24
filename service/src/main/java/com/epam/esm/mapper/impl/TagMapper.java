@@ -5,6 +5,9 @@ import com.epam.esm.entity.Tag;
 import com.epam.esm.mapper.Mapper;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class TagMapper implements Mapper<Tag, TagDto> {
     @Override
@@ -21,5 +24,17 @@ public class TagMapper implements Mapper<Tag, TagDto> {
         tag.setId(dto.getId());
         tag.setName(dto.getName());
         return tag;
+    }
+
+    public List<TagDto> mapListEntityToListDto(List<Tag> entities) {
+        return entities.stream()
+                .map(this::mapEntityToDto)
+                .collect(Collectors.toList());
+    }
+
+    public List<Tag> mapListDtoToListEntity(List<TagDto> dtos) {
+        return dtos.stream()
+                .map(this::mapDtoToEntity)
+                .collect(Collectors.toList());
     }
 }

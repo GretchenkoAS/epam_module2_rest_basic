@@ -35,16 +35,19 @@ public class TagServiceImpl implements TagService {
     @Override
     public List<TagDto> findAll() {
         List<Tag> tags = tagDao.findAll();
-        return tags.stream().map(mapper::mapEntityToDto).collect(Collectors.toList());
+        return tags.stream()
+                .map(mapper::mapEntityToDto)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public void add(TagDto tagDto) {
+    public TagDto add(TagDto tagDto) {
         Tag tag = mapper.mapDtoToEntity(tagDto);
         if (tagDao.findByName(tag.getName()).isPresent()) {
             //fixme add throw
         }
-        tagDao.add(tag);
+        Tag tagInDb = tagDao.add(tag);
+        return mapper.mapEntityToDto(tagInDb);
     }
 
     @Override

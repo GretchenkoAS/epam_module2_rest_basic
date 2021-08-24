@@ -1,6 +1,7 @@
 package com.epam.esm.controller;
 
 import com.epam.esm.dto.GiftCertificateDto;
+import com.epam.esm.dto.QueryDto;
 import com.epam.esm.service.GiftCertificateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,8 +31,8 @@ public class GiftCertificateController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void add(@RequestBody GiftCertificateDto newGiftCertificate) {
-        giftCertificateService.add(newGiftCertificate);
+    public GiftCertificateDto add(@RequestBody GiftCertificateDto newGiftCertificate) {
+        return giftCertificateService.add(newGiftCertificate);
     }
 
     @DeleteMapping("/{id}")
@@ -41,8 +42,15 @@ public class GiftCertificateController {
     }
 
     @PutMapping("/{id}")
-    public void update(@RequestBody GiftCertificateDto updatedCertificateDto, @PathVariable Long id){
-        giftCertificateService.update(updatedCertificateDto, id);
+    public GiftCertificateDto update(@RequestBody GiftCertificateDto updatedCertificateDto, @PathVariable Long id){
+        return giftCertificateService.update(updatedCertificateDto, id);
     }
 
+    @GetMapping("/query")
+    public List<GiftCertificateDto> findByQuery(@RequestParam(required = false) String tagName,
+                                                          @RequestParam(required = false) String contains,
+                                                          @RequestParam(required = false) String sortByName,
+                                                          @RequestParam(required = false) String sortByDate) {
+        return giftCertificateService.findByQuery(new QueryDto(tagName, contains, sortByName, sortByDate));
+    }
 }

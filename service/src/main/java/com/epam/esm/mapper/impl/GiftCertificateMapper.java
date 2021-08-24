@@ -1,15 +1,14 @@
 package com.epam.esm.mapper.impl;
 
 import com.epam.esm.dto.GiftCertificateDto;
-import com.epam.esm.dto.TagDto;
 import com.epam.esm.entity.GiftCertificate;
-import com.epam.esm.entity.Tag;
 import com.epam.esm.mapper.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
 
 @Service
 public class GiftCertificateMapper implements Mapper<GiftCertificate, GiftCertificateDto> {
@@ -31,8 +30,7 @@ public class GiftCertificateMapper implements Mapper<GiftCertificate, GiftCertif
         giftCertificateDto.setCreateDate(entity.getCreateDate());
         giftCertificateDto.setLastUpdateDate(entity.getLastUpdateDate());
         if (entity.getTags() != null) {
-            List<TagDto> tagsDto = entity.getTags().stream().map(tagMapper::mapEntityToDto).collect(Collectors.toList());
-            giftCertificateDto.setTags(tagsDto);
+            giftCertificateDto.setTags(tagMapper.mapListEntityToListDto(entity.getTags()));
         }
         return giftCertificateDto;
     }
@@ -48,9 +46,20 @@ public class GiftCertificateMapper implements Mapper<GiftCertificate, GiftCertif
         giftCertificate.setCreateDate(dto.getCreateDate());
         giftCertificate.setLastUpdateDate(dto.getLastUpdateDate());
         if (dto.getTags() != null) {
-            List<Tag> tags = dto.getTags().stream().map(tagMapper::mapDtoToEntity).collect(Collectors.toList());
-            giftCertificate.setTags(tags);
+            giftCertificate.setTags(tagMapper.mapListDtoToListEntity(dto.getTags()));
         }
         return giftCertificate;
+    }
+
+    public List<GiftCertificateDto> mapListEntityToListDto(List<GiftCertificate> entities) {
+        return entities.stream()
+                .map(this::mapEntityToDto)
+                .collect(Collectors.toList());
+    }
+
+    public List<GiftCertificate> mapListDtoToListEntity(List<GiftCertificateDto> dtos) {
+        return dtos.stream()
+                .map(this::mapDtoToEntity)
+                .collect(Collectors.toList());
     }
 }

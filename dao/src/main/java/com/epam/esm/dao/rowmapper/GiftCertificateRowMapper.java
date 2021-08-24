@@ -10,15 +10,15 @@ import java.sql.SQLException;
 @Component
 public class GiftCertificateRowMapper implements RowMapper<GiftCertificate> {
     @Override
-    public GiftCertificate mapRow(ResultSet rs, int rowNum) throws SQLException {
+    public GiftCertificate mapRow(ResultSet resultSet, int rowNum) throws SQLException {
         GiftCertificate certificate = new GiftCertificate();
-        certificate.setId(rs.getLong("id"));
-        certificate.setName(rs.getString("name"));
-        certificate.setDescription(rs.getString("description"));
-        certificate.setPrice(rs.getBigDecimal("price"));
-        certificate.setDuration(rs.getInt("duration"));
-        certificate.setCreateDate((rs.getTimestamp("create_date")).toLocalDateTime());
-        certificate.setLastUpdateDate((rs.getTimestamp("last_update_date")).toLocalDateTime());
+        certificate.setId(resultSet.getLong("id"));
+        certificate.setName(resultSet.getString("name"));
+        certificate.setDescription(resultSet.getString("description"));
+        certificate.setPrice(resultSet.getBigDecimal("price"));
+        certificate.setDuration(resultSet.getInt("duration"));
+        certificate.setCreateDate((resultSet.getTimestamp("create_date")).toLocalDateTime());
+        certificate.setLastUpdateDate((resultSet.getTimestamp("last_update_date")).toLocalDateTime());
         return certificate;
     }
 }

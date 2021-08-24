@@ -30,8 +30,8 @@ public class TagController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void add(@RequestBody TagDto newTag) {
-        tagService.add(newTag);
+    public TagDto add(@RequestBody TagDto newTag) {
+        return tagService.add(newTag);
     }
 
     @DeleteMapping("/{id}")

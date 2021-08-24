@@ -12,7 +12,11 @@ com/epam/esm/service/impl/GiftCertificateServiceImpl.java
  com.epam.esm.service.impl.GiftCertificateServiceImpl
 com/epam/esm/dto/GiftCertificateDto.java
  com.epam.esm.dto.GiftCertificateDto
+com/epam/esm/mapper/impl/QueryMapper.java
+ com.epam.esm.mapper.impl.QueryMapper
 com/epam/esm/service/TagService.java
  com.epam.esm.service.TagService
+com/epam/esm/dto/QueryDto.java
+ com.epam.esm.dto.QueryDto
 com/epam/esm/service/GiftCertificateService.java
  com.epam.esm.service.GiftCertificateService

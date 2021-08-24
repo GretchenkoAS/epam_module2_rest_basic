@@ -5,7 +5,7 @@ import com.epam.esm.dto.TagDto;
 import java.util.List;
 
 public interface TagService {
-    void add(TagDto tagDTO);
+    TagDto add(TagDto tagDTO);
 
     TagDto find(Long id);
 
