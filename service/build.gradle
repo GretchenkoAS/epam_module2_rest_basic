@@ -1,5 +1,6 @@
 dependencies {
     implementation project(':dao')
+    implementation group: 'org.springframework', name: 'spring-web', version: '5.3.9'
 }
 
 test {

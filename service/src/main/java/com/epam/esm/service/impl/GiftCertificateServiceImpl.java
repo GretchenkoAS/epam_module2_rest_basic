@@ -111,6 +111,7 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
         return true;
     }
 
+    @Transactional
     @Override
     public List<GiftCertificateDto> findByQuery(QueryDto queryDto) {
         List<GiftCertificate> giftCertificates = giftCertificateDao.findByQuery(queryMapper.mapDtoToEntity(queryDto));
