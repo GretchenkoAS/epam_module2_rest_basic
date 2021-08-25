@@ -1,6 +1,8 @@
 dependencies {
     implementation project(':dao')
     implementation group: 'org.springframework', name: 'spring-web', version: '5.3.9'
+    testImplementation group: 'org.mockito', name: 'mockito-all', version: '1.10.19'
+
 }
 
 test {
