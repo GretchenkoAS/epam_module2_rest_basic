@@ -1,4 +1,0 @@
-com/epam/esm/service/impl/TagServiceImplTest.java
- com.epam.esm.service.impl.TagServiceImplTest
-com/epam/esm/service/impl/GiftCertificateServiceImplTest.java
- com.epam.esm.service.impl.GiftCertificateServiceImplTest

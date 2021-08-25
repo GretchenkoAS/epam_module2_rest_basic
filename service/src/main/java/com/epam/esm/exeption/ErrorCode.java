@@ -10,7 +10,9 @@ public enum ErrorCode {
     GIFT_CERTIFICATE_FIELD_INVALID(40003, "gift.certificate.field.invalid", HttpStatus.BAD_REQUEST),
     GIFT_CERTIFICATE_ALREADY_EXIST(40004, "gift.certificate.already.exist", HttpStatus.BAD_REQUEST),
     GIFT_CERTIFICATE_NOT_FOUND(40005, "gift.certificate.not.found", HttpStatus.NOT_FOUND),
-//    UNSUPPORTED_MEDIA_TYPE(41500, "unsupported.media.type", HttpStatus.UNSUPPORTED_MEDIA_TYPE),
+    MESSAGE_NOT_READABLE(40007, "message.not.readable", HttpStatus.BAD_REQUEST),
+    BAD_REQUEST(40008, "bad.request", HttpStatus.BAD_REQUEST),
+    METHOD_ARGUMENT_TYPE_MISMATCH(40009, "method.argument.type.mismatch", HttpStatus.BAD_REQUEST),
     INTERNAL_ERROR(50001, "internal.error", HttpStatus.INTERNAL_SERVER_ERROR);
 
     private Integer code;
