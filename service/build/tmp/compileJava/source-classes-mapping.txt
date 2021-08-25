@@ -2,18 +2,26 @@ com/epam/esm/dto/TagDto.java
  com.epam.esm.dto.TagDto
 com/epam/esm/service/impl/TagServiceImpl.java
  com.epam.esm.service.impl.TagServiceImpl
+com/epam/esm/validator/TagValidator.java
+ com.epam.esm.validator.TagValidator
 com/epam/esm/mapper/Mapper.java
  com.epam.esm.mapper.Mapper
 com/epam/esm/mapper/impl/TagMapper.java
  com.epam.esm.mapper.impl.TagMapper
 com/epam/esm/mapper/impl/GiftCertificateMapper.java
  com.epam.esm.mapper.impl.GiftCertificateMapper
+com/epam/esm/mapper/impl/QueryMapper.java
+ com.epam.esm.mapper.impl.QueryMapper
+com/epam/esm/exeption/ErrorCode.java
+ com.epam.esm.exeption.ErrorCode
+com/epam/esm/exeption/CustomException.java
+ com.epam.esm.exeption.CustomException
+com/epam/esm/validator/GiftCertificateValidator.java
+ com.epam.esm.validator.GiftCertificateValidator
 com/epam/esm/service/impl/GiftCertificateServiceImpl.java
  com.epam.esm.service.impl.GiftCertificateServiceImpl
 com/epam/esm/dto/GiftCertificateDto.java
  com.epam.esm.dto.GiftCertificateDto
-com/epam/esm/mapper/impl/QueryMapper.java
- com.epam.esm.mapper.impl.QueryMapper
 com/epam/esm/service/TagService.java
  com.epam.esm.service.TagService
 com/epam/esm/dto/QueryDto.java

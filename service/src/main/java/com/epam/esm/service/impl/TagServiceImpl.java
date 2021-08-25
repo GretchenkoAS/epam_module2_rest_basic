@@ -17,6 +17,10 @@ import java.util.stream.Collectors;
 
 @Service
 public class TagServiceImpl implements TagService {
+    private final static String ID = "id";
+    private final static String NAME = "name";
+
+
     private final TagDao tagDao;
     private final TagMapper mapper;
     private final TagValidator tagValidator;
@@ -32,7 +36,7 @@ public class TagServiceImpl implements TagService {
     public TagDto find(Long id) {
         Optional<Tag> tagOptional = tagDao.findOne(id);
         if (tagOptional.isEmpty()) {
-            throw new CustomException(ErrorCode.TAG_NOT_FOUND, id);
+            throw new CustomException(ErrorCode.TAG_NOT_FOUND, ID, id);
         }
         return mapper.mapEntityToDto(tagOptional.get());
     }
@@ -48,11 +52,11 @@ public class TagServiceImpl implements TagService {
     @Override
     public TagDto add(TagDto tagDto) {
         if(!tagValidator.isValidName(tagDto.getName())){
-            throw new CustomException(ErrorCode.TAG_FIELD_INVALID, tagDto.getName());
+            throw new CustomException(ErrorCode.TAG_FIELD_INVALID, NAME, tagDto.getName());
         }
         Tag tag = mapper.mapDtoToEntity(tagDto);
         if (tagDao.findByName(tag.getName()).isPresent()) {
-            throw new CustomException(ErrorCode.TAG_ALREADY_EXIST, tagDto.getName());
+            throw new CustomException(ErrorCode.TAG_ALREADY_EXIST, NAME, tagDto.getName());
         }
         Tag tagInDb = tagDao.add(tag);
         return mapper.mapEntityToDto(tagInDb);
@@ -73,7 +77,7 @@ public class TagServiceImpl implements TagService {
     public TagDto findByName(String name) {
         Optional<Tag> tagOptional = tagDao.findByName(name);
         if (tagOptional.isEmpty()) {
-            throw new CustomException(ErrorCode.TAG_NOT_FOUND, name);
+            throw new CustomException(ErrorCode.TAG_NOT_FOUND, NAME, name);
         }
         return tagOptional.map(mapper::mapEntityToDto).get();
     }
