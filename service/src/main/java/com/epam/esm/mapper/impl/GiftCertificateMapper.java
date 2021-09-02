@@ -20,7 +20,7 @@ public class GiftCertificateMapper implements Mapper<GiftCertificate, GiftCertif
     }
 
     @Override
-    public GiftCertificateDto mapEntityToDto(GiftCertificate entity) {
+    public GiftCertificateDto mapToDto(GiftCertificate entity) {
         GiftCertificateDto giftCertificateDto = new GiftCertificateDto();
         giftCertificateDto.setId(entity.getId());
         giftCertificateDto.setName(entity.getName());
@@ -30,13 +30,13 @@ public class GiftCertificateMapper implements Mapper<GiftCertificate, GiftCertif
         giftCertificateDto.setCreateDate(entity.getCreateDate());
         giftCertificateDto.setLastUpdateDate(entity.getLastUpdateDate());
         if (entity.getTags() != null) {
-            giftCertificateDto.setTags(tagMapper.mapListEntityToListDto(entity.getTags()));
+            giftCertificateDto.setTags(tagMapper.mapToListDto(entity.getTags()));
         }
         return giftCertificateDto;
     }
 
     @Override
-    public GiftCertificate mapDtoToEntity(GiftCertificateDto dto) {
+    public GiftCertificate mapToEntity(GiftCertificateDto dto) {
         GiftCertificate giftCertificate = new GiftCertificate();
         giftCertificate.setId(dto.getId());
         giftCertificate.setName(dto.getName());
@@ -46,20 +46,20 @@ public class GiftCertificateMapper implements Mapper<GiftCertificate, GiftCertif
         giftCertificate.setCreateDate(dto.getCreateDate());
         giftCertificate.setLastUpdateDate(dto.getLastUpdateDate());
         if (dto.getTags() != null) {
-            giftCertificate.setTags(tagMapper.mapListDtoToListEntity(dto.getTags()));
+            giftCertificate.setTags(tagMapper.mapToListEntity(dto.getTags()));
         }
         return giftCertificate;
     }
 
-    public List<GiftCertificateDto> mapListEntityToListDto(List<GiftCertificate> entities) {
+    public List<GiftCertificateDto> mapToListDto(List<GiftCertificate> entities) {
         return entities.stream()
-                .map(this::mapEntityToDto)
+                .map(this::mapToDto)
                 .collect(Collectors.toList());
     }
 
-    public List<GiftCertificate> mapListDtoToListEntity(List<GiftCertificateDto> dtos) {
+    public List<GiftCertificate> mapToListEntity(List<GiftCertificateDto> dtos) {
         return dtos.stream()
-                .map(this::mapDtoToEntity)
+                .map(this::mapToEntity)
                 .collect(Collectors.toList());
     }
 }

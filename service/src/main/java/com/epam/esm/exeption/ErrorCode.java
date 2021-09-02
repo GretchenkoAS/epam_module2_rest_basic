@@ -3,43 +3,46 @@ package com.epam.esm.exeption;
 import org.springframework.http.HttpStatus;
 
 public enum ErrorCode {
+    TAG_NOT_FOUND("T1", HttpStatus.NOT_FOUND),
+    TAG_NO_CONTENT("T1", HttpStatus.NO_CONTENT),
+    TAG_NAME_INVALID("T40", HttpStatus.BAD_REQUEST),
+    TAG_NAME_IS_NULL("T41", HttpStatus.BAD_REQUEST),
+    TAG_ALREADY_EXIST("T3", HttpStatus.BAD_REQUEST),
+    QUERY_CONTAINS_INVALID("Q1", HttpStatus.BAD_REQUEST),
+    QUERY_SORT_BY_NAME_INVALID("Q2", HttpStatus.BAD_REQUEST),
+    QUERY_SORT_BY_DATE_INVALID("Q3", HttpStatus.BAD_REQUEST),
+    GIFT_CERTIFICATE_NAME_INVALID("GC40", HttpStatus.BAD_REQUEST),
+    GIFT_CERTIFICATE_DESCRIPTION_INVALID("GC41", HttpStatus.BAD_REQUEST),
+    GIFT_CERTIFICATE_PRICE_INVALID("GC42", HttpStatus.BAD_REQUEST),
+    GIFT_CERTIFICATE_DURATION_INVALID("GC43", HttpStatus.BAD_REQUEST),
+    GIFT_CERTIFICATE_NAME_IS_NULL("GC44", HttpStatus.BAD_REQUEST),
+    GIFT_CERTIFICATE_DESCRIPTION_IS_NULL("GC45", HttpStatus.BAD_REQUEST),
+    GIFT_CERTIFICATE_PRICE_IS_NULL("GC46", HttpStatus.BAD_REQUEST),
+    GIFT_CERTIFICATE_DURATION_IS_NULL("GC47", HttpStatus.BAD_REQUEST),
+    GIFT_CERTIFICATE_ALREADY_EXIST("GC3", HttpStatus.BAD_REQUEST),
+    GIFT_CERTIFICATE_NOT_FOUND("GC1", HttpStatus.NOT_FOUND),
+    GIFT_CERTIFICATE_NO_CONTENT("GC1", HttpStatus.NO_CONTENT),
+    MESSAGE_NOT_READABLE("G1", HttpStatus.BAD_REQUEST),
+    BAD_REQUEST("G2", HttpStatus.BAD_REQUEST),
+    METHOD_ARGUMENT_TYPE_MISMATCH("G3", HttpStatus.BAD_REQUEST),
+    INTERNAL_ERROR("G4", HttpStatus.INTERNAL_SERVER_ERROR),
+    URL_INVALID("G5", HttpStatus.NOT_FOUND);
 
-    TAG_NOT_FOUND(40401, "tag.not.found", HttpStatus.NOT_FOUND),
-    TAG_FIELD_INVALID(40001, "tag.field.invalid", HttpStatus.BAD_REQUEST),
-    TAG_ALREADY_EXIST(40002, "tag.already.exist", HttpStatus.BAD_REQUEST),
-    GIFT_CERTIFICATE_FIELD_INVALID(40003, "gift.certificate.field.invalid", HttpStatus.BAD_REQUEST),
-    GIFT_CERTIFICATE_ALREADY_EXIST(40004, "gift.certificate.already.exist", HttpStatus.BAD_REQUEST),
-    GIFT_CERTIFICATE_NOT_FOUND(40005, "gift.certificate.not.found", HttpStatus.NOT_FOUND),
-    MESSAGE_NOT_READABLE(40007, "message.not.readable", HttpStatus.BAD_REQUEST),
-    BAD_REQUEST(40008, "bad.request", HttpStatus.BAD_REQUEST),
-    METHOD_ARGUMENT_TYPE_MISMATCH(40009, "method.argument.type.mismatch", HttpStatus.BAD_REQUEST),
-    INTERNAL_ERROR(50001, "internal.error", HttpStatus.INTERNAL_SERVER_ERROR);
-
-    private Integer code;
-    private String message;
+    private String code;
     private HttpStatus httpStatus;
 
-    ErrorCode(Integer code, String messageCode, HttpStatus httpStatus){
+    ErrorCode(String code, HttpStatus httpStatus){
         this.code = code;
-        this.message = messageCode;
         this.httpStatus = httpStatus;
 
     }
 
-    public Integer getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(Integer code) {
+    public void setCode(String code) {
         this.code = code;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String messageCode) {
-        this.message = messageCode;
     }
 
     public HttpStatus getHttpStatus() {
@@ -49,4 +52,5 @@ public enum ErrorCode {
     public void setHttpStatus(HttpStatus httpStatus) {
         this.httpStatus = httpStatus;
     }
+
 }

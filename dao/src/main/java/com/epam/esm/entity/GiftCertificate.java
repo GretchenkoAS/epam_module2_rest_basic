@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GiftCertificate {
-
     private Long id;
     private String name;
     private String description;
@@ -14,7 +13,6 @@ public class GiftCertificate {
     private Integer duration;
     private LocalDateTime createDate;
     private LocalDateTime lastUpdateDate;
-
     private List<Tag> tags;
 
     public GiftCertificate(String name, String description, BigDecimal price, int duration, LocalDateTime createDate,

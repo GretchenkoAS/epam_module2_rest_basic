@@ -3,7 +3,7 @@ package com.epam.esm.service.impl;
 import com.epam.esm.dao.impl.TagDaoImpl;
 import com.epam.esm.dto.TagDto;
 import com.epam.esm.entity.Tag;
-import com.epam.esm.exeption.CustomException;
+import com.epam.esm.exeption.AppException;
 import com.epam.esm.mapper.impl.TagMapper;
 import com.epam.esm.validator.TagValidator;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,6 +19,8 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -48,9 +50,11 @@ public class TagServiceImplTest {
         Tag expected = new Tag();
         expected.setName("Tag");
         expected.setId(id);
+
         when(tagDao.findOne(id)).thenReturn(Optional.of(expected));
-        when(mapper.mapEntityToDto(expected)).thenReturn(expectedDto);
+        when(mapper.mapToDto(expected)).thenReturn(expectedDto);
         TagDto actual = tagService.find(id);
+
         assertEquals(expectedDto, actual);
         verify(tagDao, times(1)).findOne(id);
     }
@@ -58,8 +62,10 @@ public class TagServiceImplTest {
     @Test
     public void findNegativeTest() {
         Long id = 1L;
+
         when(tagDao.findOne(id)).thenReturn(Optional.empty());
-        assertThrows(CustomException.class, () -> {
+
+        assertThrows(AppException.class, () -> {
             tagService.find(id);
         });
         verify(tagDao, times(1)).findOne(id);
@@ -87,8 +93,8 @@ public class TagServiceImplTest {
         listDtoExpected.add(expectedDto2);
 
         when(tagDao.findAll()).thenReturn(listExpected);
-        when(mapper.mapEntityToDto(expected1)).thenReturn(expectedDto1);
-        when(mapper.mapEntityToDto(expected2)).thenReturn(expectedDto2);
+        when(mapper.mapToDto(expected1)).thenReturn(expectedDto1);
+        when(mapper.mapToDto(expected2)).thenReturn(expectedDto2);
         List<TagDto> actual = tagService.findAll();
 
         assertEquals(listDtoExpected, actual);
@@ -102,12 +108,11 @@ public class TagServiceImplTest {
         Tag expected = new Tag();
         expected.setName("Tag");
 
-        when(validator.isValidName(expectedDto.getName())).thenReturn(true);
-        when(mapper.mapDtoToEntity(expectedDto)).thenReturn(expected);
+        doNothing().when(validator).validate(expectedDto);
+        when(mapper.mapToEntity(expectedDto)).thenReturn(expected);
         when(tagDao.findByName(expected.getName())).thenReturn(Optional.empty());
         when(tagDao.add(expected)).thenReturn(expected);
-        when(mapper.mapEntityToDto(expected)).thenReturn(expectedDto);
-
+        when(mapper.mapToDto(expected)).thenReturn(expectedDto);
         TagDto actual = tagService.add(expectedDto);
 
         assertEquals(expectedDto, actual);
@@ -121,10 +126,8 @@ public class TagServiceImplTest {
         Tag expected = new Tag();
         expected.setName("Tag");
 
-        when(validator.isValidName(expectedDto.getName())).thenReturn(false);
-        assertThrows(CustomException.class,() -> {
-            tagService.add(expectedDto);
-        } );
+        doThrow(AppException.class).when(validator).validate(expectedDto);
+
         verify(tagDao,  never()).add(any(Tag.class));
     }
 
@@ -138,9 +141,11 @@ public class TagServiceImplTest {
         Tag expected = new Tag();
         expected.setName(name);
         expected.setId(id);
+
         when(tagDao.findByName(name)).thenReturn(Optional.of(expected));
-        when(mapper.mapEntityToDto(expected)).thenReturn(expectedDto);
+        when(mapper.mapToDto(expected)).thenReturn(expectedDto);
         TagDto actual = tagService.findByName(name);
+
         assertEquals(expectedDto, actual);
         verify(tagDao, times(1)).findByName(name);
     }
@@ -148,8 +153,10 @@ public class TagServiceImplTest {
     @Test
     public void findByNameNegativeTest() {
         String name = "Tag";
+
         when(tagDao.findByName(name)).thenReturn(Optional.empty());
-        assertThrows(CustomException.class, () -> {
+
+        assertThrows(AppException.class, () -> {
             tagService.findByName(name);
         });
         verify(tagDao, times(1)).findByName(name);

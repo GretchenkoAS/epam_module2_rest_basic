@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class QueryMapper implements Mapper<Query, QueryDto> {
     @Override
-    public QueryDto mapEntityToDto(Query entity) {
+    public QueryDto mapToDto(Query entity) {
         QueryDto queryDto = new QueryDto();
         queryDto.setTagName(entity.getTagName());
         queryDto.setContains(entity.getContains());
@@ -18,7 +18,7 @@ public class QueryMapper implements Mapper<Query, QueryDto> {
     }
 
     @Override
-    public Query mapDtoToEntity(QueryDto dto) {
+    public Query mapToEntity(QueryDto dto) {
         Query query = new Query();
         query.setTagName(dto.getTagName());
         query.setContains(dto.getContains());

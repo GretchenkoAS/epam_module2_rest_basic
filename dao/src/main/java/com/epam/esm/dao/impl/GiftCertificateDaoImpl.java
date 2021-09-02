@@ -22,23 +22,20 @@ import static java.time.LocalDateTime.now;
 
 @Repository
 public class GiftCertificateDaoImpl implements GiftCertificateDao {
-
-    private final static String SELECT_ALL_GIFT_CERTIFICATES = "SELECT * FROM gift_certificates";
-    private final static String SELECT_ONE_GIFT_CERTIFICATE = "SELECT * FROM gift_certificates WHERE id=?";
-    private final static String SELECT_ONE_GIFT_CERTIFICATE_BY_NAME = "SELECT * FROM gift_certificates WHERE name=?";
-    private final static String ADD_GIFT_CERTIFICATE = "INSERT INTO gift_certificates (name, description," +
+    private static final String SELECT_ALL_GIFT_CERTIFICATES = "SELECT * FROM gift_certificates";
+    private static final String SELECT_ONE_GIFT_CERTIFICATE = "SELECT * FROM gift_certificates WHERE id=?";
+    private static final String SELECT_ONE_GIFT_CERTIFICATE_BY_NAME = "SELECT * FROM gift_certificates WHERE name=?";
+    private static final String ADD_GIFT_CERTIFICATE = "INSERT INTO gift_certificates (name, description," +
             " price, duration, create_date, last_update_date) VALUES (?, ?, ?, ?, ?, ?)";
-    private final static String ADD_TAG_TO_GIFT_CERTIFICATE = "INSERT INTO tags_gift_certificates VALUES (?, ?)";
-    private final static String CLEAR_GIFT_CERTIFICATE_TAGS = "DELETE FROM tags_gift_certificates WHERE gift_certificate_id=?";
-    private final static String UPDATE_GIFT_CERTIFICATE = "UPDATE gift_certificates SET name = ?, description = ?, price = ?, duration = ?, last_update_date = ? WHERE id =?";
-    private final static String DELETE_GIFT_CERTIFICATE = "DELETE FROM gift_certificates WHERE id=?";
-    private final static String SELECT_TAGS = "SELECT * FROM tags INNER JOIN tags_gift_certificates " +
+    private static final String ADD_TAG_TO_GIFT_CERTIFICATE = "INSERT INTO tags_gift_certificates VALUES (?, ?)";
+    private static final String CLEAR_GIFT_CERTIFICATE_TAGS = "DELETE FROM tags_gift_certificates WHERE gift_certificate_id=?";
+    private static final String UPDATE_GIFT_CERTIFICATE = "UPDATE gift_certificates SET name = ?, description = ?, price = ?, duration = ?, last_update_date = ? WHERE id =?";
+    private static final String DELETE_GIFT_CERTIFICATE = "DELETE FROM gift_certificates WHERE id=?";
+    private static final String SELECT_TAGS = "SELECT * FROM tags INNER JOIN tags_gift_certificates " +
             "ON tags.id = tags_gift_certificates.tag_id WHERE tags_gift_certificates.gift_certificate_id = ?";
-
     private final JdbcTemplate jdbcTemplate;
     private final GiftCertificateRowMapper giftCertificateRowMapper;
     private final TagRowMapper tagRowMapper;
-
 
     @Autowired
     public GiftCertificateDaoImpl(JdbcTemplate jdbcTemplate, GiftCertificateRowMapper giftCertificateRowMapper, TagRowMapper tagRowMapper) {

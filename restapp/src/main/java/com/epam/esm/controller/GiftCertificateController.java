@@ -2,7 +2,7 @@ package com.epam.esm.controller;
 
 import com.epam.esm.dto.GiftCertificateDto;
 import com.epam.esm.dto.QueryDto;
-import com.epam.esm.exeption.CustomException;
+import com.epam.esm.exeption.AppException;
 import com.epam.esm.service.GiftCertificateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,7 +17,7 @@ import java.util.List;
  * @author Andrey Gretchenko
  */
 @RestController
-@RequestMapping("/giftCertificates")
+@RequestMapping("/gift_certificates")
 public class GiftCertificateController {
     private final GiftCertificateService giftCertificateService;
 
@@ -41,7 +41,7 @@ public class GiftCertificateController {
      *
      * @param id id of gift certificate to find
      * @return GiftCertificateDto object of gift certificate with provided id in repository
-     * @throws CustomException if gift certificate with provided id is not present in repository
+     * @throws AppException if gift certificate with provided id is not present in repository
      */
     @GetMapping("/{id}")
     public GiftCertificateDto find(@PathVariable Long id) {
@@ -54,14 +54,13 @@ public class GiftCertificateController {
      * @param newGiftCertificate GiftCertificateDto object on basis of which is created new gift certificate
      *                           in repository
      * @return GiftCertificateDto gift certificate dto of created in repository gift certificate
-     * @throws CustomException if fields in provided GiftCertificateDTO object is not valid
+     * @throws AppException if fields in provided GiftCertificateDTO object is not valid
      */
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public GiftCertificateDto add(@RequestBody GiftCertificateDto newGiftCertificate) {
         return giftCertificateService.add(newGiftCertificate);
     }
-
 
     /**
      * Removes gift certificate with provided id from repository.
@@ -81,7 +80,7 @@ public class GiftCertificateController {
      *                              in repository
      * @param id                    id of updated gift certificate
      * @return GiftCertificateDto gift certificate dto of updated gift certificate in repository
-     * @throws CustomException if fields in provided GiftCertificateDto is not valid or gift certificate with provided
+     * @throws AppException if fields in provided GiftCertificateDto is not valid or gift certificate with provided
      *                         id is not present in repository
      */
     @PutMapping("/{id}")
@@ -92,11 +91,12 @@ public class GiftCertificateController {
     /**
      * Retrieves gift certificates from repository according to provided request parameters.
      *
-     * @param tagName    (optional) request parameter for search by tag
-     * @param contains   (optional) request parameter for search by phrase contained in name or description of gift
-     *                   certificate
-     * @param sortByName (optional) request parameter for sorting by name ascending or descending
-     * @param sortByDate (optional) request parameter for sorting by date ascending or descending
+     * @param tagName (optional) request parameter for search by tag
+     * @param contains (optional) request parameter for search by phrase contained in name or description of gift
+     *                 certificate
+     * @param sortByName (optional) request parameter for sorting by name, ascending or descending
+     * @param sortByDate (optional) request parameter for sorting by date, ascending or descending
+     * @throws AppException if QueryDto fields is not valid
      * @return List<GiftCertificate> list of gift certificates from repository according to provided query
      */
     @GetMapping("/query")
@@ -105,5 +105,20 @@ public class GiftCertificateController {
                                                 @RequestParam(required = false) String sortByName,
                                                 @RequestParam(required = false) String sortByDate) {
         return giftCertificateService.findByQuery(new QueryDto(tagName, contains, sortByName, sortByDate));
+    }
+
+    /**
+     * Updates gift certificate fields according to provided in request body fields.
+     *
+     * @param updatedCertificateDto GiftCertificateDto object according to which is necessary to update gift certificate
+     *                              in repository
+     * @param id                    id of updated gift certificate
+     * @return GiftCertificateDto gift certificate dto of updated gift certificate in repository
+     * @throws AppException if fields in provided GiftCertificateDto is not valid or gift certificate with provided
+     *                         id is not present in repository
+     */
+    @PatchMapping("/{id}")
+    public GiftCertificateDto patch(@RequestBody GiftCertificateDto updatedCertificateDto, @PathVariable Long id){
+        return giftCertificateService.patch(updatedCertificateDto, id);
     }
 }

@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 @Service
 public class TagMapper implements Mapper<Tag, TagDto> {
     @Override
-    public TagDto mapEntityToDto(Tag entity) {
+    public TagDto mapToDto(Tag entity) {
         TagDto tagDto = new TagDto();
         tagDto.setId(entity.getId());
         tagDto.setName(entity.getName());
@@ -19,22 +19,22 @@ public class TagMapper implements Mapper<Tag, TagDto> {
     }
 
     @Override
-    public Tag mapDtoToEntity(TagDto dto) {
+    public Tag mapToEntity(TagDto dto) {
         Tag tag = new Tag();
         tag.setId(dto.getId());
         tag.setName(dto.getName());
         return tag;
     }
 
-    public List<TagDto> mapListEntityToListDto(List<Tag> entities) {
+    public List<TagDto> mapToListDto(List<Tag> entities) {
         return entities.stream()
-                .map(this::mapEntityToDto)
+                .map(this::mapToDto)
                 .collect(Collectors.toList());
     }
 
-    public List<Tag> mapListDtoToListEntity(List<TagDto> dtos) {
+    public List<Tag> mapToListEntity(List<TagDto> dtos) {
         return dtos.stream()
-                .map(this::mapDtoToEntity)
+                .map(this::mapToEntity)
                 .collect(Collectors.toList());
     }
 }

@@ -16,15 +16,13 @@ import java.util.Optional;
 
 @Repository
 public class TagDaoImpl implements TagDao {
-    private final static String SELECT_ALL_TAGS = "SELECT * FROM tags";
-    private final static String SELECT_ONE_TAG = "SELECT * FROM tags WHERE id=?";
-    private final static String ADD_TAG = "INSERT INTO tags (name) VALUES (?)";
-    private final static String DELETE_TAG = "DELETE FROM tags WHERE id=?";
-    private final static String SELECT_ONE_TAG_BY_NAME = "SELECT * FROM tags WHERE name=?";
-
+    private static final String SELECT_ALL_TAGS = "SELECT * FROM tags WHERE is_blocked=false";
+    private static final String SELECT_ONE_TAG = "SELECT * FROM tags WHERE id=? AND is_blocked=false";
+    private static final String ADD_TAG = "INSERT INTO tags (name) VALUES (?)";
+    private static final String DELETE_TAG = "UPDATE tags SET is_blocked=true WHERE id=?";
+    private static final String SELECT_ONE_TAG_BY_NAME = "SELECT * FROM tags WHERE name=? AND is_blocked=false";
     private final JdbcTemplate jdbcTemplate;
     private final TagRowMapper tagRowMapper;
-
 
     @Autowired
     public TagDaoImpl(JdbcTemplate jdbcTemplate, TagRowMapper tagRowMapper) {
@@ -57,7 +55,6 @@ public class TagDaoImpl implements TagDao {
         obj.setId(keyHolder.getKey().longValue());
         return obj;
     }
-
 
     @Override
     public Tag update(Tag obj, Long id) {

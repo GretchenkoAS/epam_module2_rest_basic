@@ -9,16 +9,24 @@ import java.sql.SQLException;
 
 @Component
 public class GiftCertificateRowMapper implements RowMapper<GiftCertificate> {
+    private static final String ID = "id";
+    private static final String DESCRIPTION = "description";
+    private static final String NAME = "name";
+    private static final String PRICE = "price";
+    private static final String DURATION = "duration";
+    private static final String CREATE_DATE = "create_date";
+    private static final String LAST_UPDATE_DATE = "last_update_date";
+
     @Override
     public GiftCertificate mapRow(ResultSet resultSet, int rowNum) throws SQLException {
         GiftCertificate certificate = new GiftCertificate();
-        certificate.setId(resultSet.getLong("id"));
-        certificate.setName(resultSet.getString("name"));
-        certificate.setDescription(resultSet.getString("description"));
-        certificate.setPrice(resultSet.getBigDecimal("price"));
-        certificate.setDuration(resultSet.getInt("duration"));
-        certificate.setCreateDate((resultSet.getTimestamp("create_date")).toLocalDateTime());
-        certificate.setLastUpdateDate((resultSet.getTimestamp("last_update_date")).toLocalDateTime());
+        certificate.setId(resultSet.getLong(ID));
+        certificate.setName(resultSet.getString(NAME));
+        certificate.setDescription(resultSet.getString(DESCRIPTION));
+        certificate.setPrice(resultSet.getBigDecimal(PRICE));
+        certificate.setDuration(resultSet.getInt(DURATION));
+        certificate.setCreateDate((resultSet.getTimestamp(CREATE_DATE)).toLocalDateTime());
+        certificate.setLastUpdateDate((resultSet.getTimestamp(LAST_UPDATE_DATE)).toLocalDateTime());
         return certificate;
     }
 }

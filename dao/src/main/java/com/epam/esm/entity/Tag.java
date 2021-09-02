@@ -1,7 +1,6 @@
 package com.epam.esm.entity;
 
 public class Tag {
-
     private Long id;
     private String name;
 

@@ -1,7 +1,6 @@
 package com.epam.esm.exception;
 
 public class CustomErrorResponse {
-
     private String message;
     private String code;
 

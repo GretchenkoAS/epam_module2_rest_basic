@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public class GiftCertificateDto {
-
     private Long id;
     private String name;
     private String description;

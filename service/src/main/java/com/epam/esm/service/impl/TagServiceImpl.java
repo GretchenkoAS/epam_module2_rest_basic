@@ -3,7 +3,7 @@ package com.epam.esm.service.impl;
 import com.epam.esm.dao.TagDao;
 import com.epam.esm.dto.TagDto;
 import com.epam.esm.entity.Tag;
-import com.epam.esm.exeption.CustomException;
+import com.epam.esm.exeption.AppException;
 import com.epam.esm.exeption.ErrorCode;
 import com.epam.esm.mapper.impl.TagMapper;
 import com.epam.esm.service.TagService;
@@ -17,10 +17,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class TagServiceImpl implements TagService {
-    private final static String ID = "id";
-    private final static String NAME = "name";
-
-
+    private static final String ID = "id";
+    private static final String NAME = "name";
     private final TagDao tagDao;
     private final TagMapper mapper;
     private final TagValidator tagValidator;
@@ -36,40 +34,41 @@ public class TagServiceImpl implements TagService {
     public TagDto find(Long id) {
         Optional<Tag> tagOptional = tagDao.findOne(id);
         if (tagOptional.isEmpty()) {
-            throw new CustomException(ErrorCode.TAG_NOT_FOUND, ID, id);
+            throw new AppException(ErrorCode.TAG_NOT_FOUND, ID, id);
         }
-        return mapper.mapEntityToDto(tagOptional.get());
+        return mapper.mapToDto(tagOptional.get());
     }
 
     @Override
     public List<TagDto> findAll() {
         List<Tag> tags = tagDao.findAll();
         return tags.stream()
-                .map(mapper::mapEntityToDto)
+                .map(mapper::mapToDto)
                 .collect(Collectors.toList());
     }
 
     @Override
     public TagDto add(TagDto tagDto) {
-        if(!tagValidator.isValidName(tagDto.getName())){
-            throw new CustomException(ErrorCode.TAG_FIELD_INVALID, NAME, tagDto.getName());
-        }
-        Tag tag = mapper.mapDtoToEntity(tagDto);
+        tagValidator.validate(tagDto);
+        Tag tag = mapper.mapToEntity(tagDto);
         if (tagDao.findByName(tag.getName()).isPresent()) {
-            throw new CustomException(ErrorCode.TAG_ALREADY_EXIST, NAME, tagDto.getName());
+            throw new AppException(ErrorCode.TAG_ALREADY_EXIST, NAME, tagDto.getName());
         }
         Tag tagInDb = tagDao.add(tag);
-        return mapper.mapEntityToDto(tagInDb);
+        return mapper.mapToDto(tagInDb);
     }
 
     @Override
     public boolean exist(TagDto tagDto) {
-        Tag tag = mapper.mapDtoToEntity(tagDto);
+        Tag tag = mapper.mapToEntity(tagDto);
         return tagDao.findByName(tag.getName()).isPresent();
     }
 
     @Override
     public void delete(Long id) {
+        if (tagDao.findOne(id).isEmpty()) {
+            throw new AppException(ErrorCode.TAG_NO_CONTENT, ID, id);
+        }
         tagDao.delete(id);
     }
 
@@ -77,8 +76,8 @@ public class TagServiceImpl implements TagService {
     public TagDto findByName(String name) {
         Optional<Tag> tagOptional = tagDao.findByName(name);
         if (tagOptional.isEmpty()) {
-            throw new CustomException(ErrorCode.TAG_NOT_FOUND, NAME, name);
+            throw new AppException(ErrorCode.TAG_NOT_FOUND, NAME, name);
         }
-        return tagOptional.map(mapper::mapEntityToDto).get();
+        return tagOptional.map(mapper::mapToDto).get();
     }
 }

@@ -1,7 +1,7 @@
 package com.epam.esm.service;
 
 import com.epam.esm.dto.TagDto;
-import com.epam.esm.exeption.CustomException;
+import com.epam.esm.exeption.AppException;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ public interface TagService {
      *
      * @param tagDto TagDto object on basis of which is created new tag in repository
      * @return TagDto tag dto of created in repository tag
-     * @throws CustomException if fields in provided TagDto object is not valid or tag with the same name is already
+     * @throws AppException if fields in provided TagDto object is not valid or tag with the same name is already
      *                         in repository
      */
     TagDto add(TagDto tagDto);
@@ -26,7 +26,7 @@ public interface TagService {
      *
      * @param id id of tag to find
      * @return TagDto object of tag with provided id in repository
-     * @throws CustomException if tag with provided id is not present in repository
+     * @throws AppException if tag with provided id is not present in repository
      */
     TagDto find(Long id);
 
@@ -42,7 +42,7 @@ public interface TagService {
      *
      * @param name name of tag to find
      * @return TagDto object of tag with provided name in repository
-     * @throws CustomException if tag with provided name is not present in repository
+     * @throws AppException if tag with provided name is not present in repository
      */
     TagDto findByName(String name);
 

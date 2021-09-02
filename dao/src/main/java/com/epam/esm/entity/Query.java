@@ -4,24 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Query {
-    private final static String SELECT_ALL_GIFT_CERTIFICATES = "SELECT * FROM gift_certificates gs";
-    private final static String SQL_SELECT_BY_TAG = " JOIN tags_gift_certificates tg ON gs.id = tg.gift_certificate_id JOIN tags t ON t.id = tg.tag_id WHERE t.name = ?";
-    private final static String SQL_QUERY_CONTAIN = " gs.name LIKE concat ('%', ?, '%') OR gs.description LIKE concat ('%', ?, '%')";
-    private final static String SQL_QUERY_CONTAINS_WITHOUT_TAG = " WHERE";
-    private final static String SQL_QUERY_CONTAINS_WITH_TAG = " AND";
-    private final static String SQL_QUERY_ORDER = " ORDER BY";
-    private final static String SQL_ORDER_DESC = " DESC";
-    private final static String SQL_QUERY_ORDER_BY_DATE = " gs.create_date";
-    private final static String SQL_QUERY_ORDER_BY_NAME = " gs.name";
-    private final static String COMA_SIGN = ",";
-    private final static String DESC = "DESC";
-
-
+    private static final String SELECT_ALL_GIFT_CERTIFICATES = "SELECT * FROM gift_certificates gs";
+    private static final String SQL_SELECT_BY_TAG = " JOIN tags_gift_certificates tg ON gs.id = tg.gift_certificate_id JOIN tags t ON t.id = tg.tag_id WHERE t.name = ?";
+    private static final String SQL_QUERY_CONTAIN = " gs.name LIKE concat ('%', ?, '%') OR gs.description LIKE concat ('%', ?, '%')";
+    private static final String SQL_QUERY_CONTAINS_WITHOUT_TAG = " WHERE";
+    private static final String SQL_QUERY_CONTAINS_WITH_TAG = " AND";
+    private static final String SQL_QUERY_ORDER = " ORDER BY";
+    private static final String SQL_ORDER_DESC = " DESC";
+    private static final String SQL_QUERY_ORDER_BY_DATE = " gs.create_date";
+    private static final String SQL_QUERY_ORDER_BY_NAME = " gs.name";
+    private static final String COMA_SIGN = ",";
+    private static final String DESC = "DESC";
     private String tagName;
     private String contains;
     private String sortByName;
     private String sortByDate;
-
     private List<String> params = new ArrayList<>();
     private StringBuilder SqlQuery = new StringBuilder(SELECT_ALL_GIFT_CERTIFICATES);
 

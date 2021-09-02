@@ -4,15 +4,14 @@ package com.epam.esm.service.impl;
 import com.epam.esm.dao.GiftCertificateDao;
 import com.epam.esm.dto.GiftCertificateDto;
 import com.epam.esm.dto.QueryDto;
-import com.epam.esm.dto.TagDto;
 import com.epam.esm.entity.GiftCertificate;
 import com.epam.esm.entity.Query;
-import com.epam.esm.entity.Tag;
-import com.epam.esm.exeption.CustomException;
+import com.epam.esm.exeption.AppException;
 import com.epam.esm.mapper.impl.GiftCertificateMapper;
 import com.epam.esm.mapper.impl.QueryMapper;
 import com.epam.esm.service.TagService;
 import com.epam.esm.validator.GiftCertificateValidator;
+import com.epam.esm.validator.QueryValidator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -26,6 +25,8 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -44,6 +45,8 @@ public class GiftCertificateServiceImplTest {
     @Mock
     private GiftCertificateValidator validator;
     @Mock
+    private QueryValidator queryValidator;
+    @Mock
     private QueryMapper queryMapper;
 
     @BeforeEach
@@ -58,17 +61,13 @@ public class GiftCertificateServiceImplTest {
         GiftCertificate expected = new GiftCertificate();
         expected.setName("GiftCertificate");
 
-        when(validator.isValidName(expectedDto.getName())).thenReturn(true);
-        when(validator.isValidDescription(expectedDto.getDescription())).thenReturn(true);
-        when(validator.isValidPrice(expectedDto.getPrice())).thenReturn(true);
-        when(validator.isValidDuration(expectedDto.getDuration())).thenReturn(true);
-        when(mapper.mapDtoToEntity(expectedDto)).thenReturn(expected);
+        doNothing().when(validator).validate(expectedDto);
+        when(mapper.mapToEntity(expectedDto)).thenReturn(expected);
         when(giftCertificateDao.findByName(expected.getName())).thenReturn(Optional.empty());
         when(giftCertificateDao.add(expected)).thenReturn(expected);
-
-        when(mapper.mapEntityToDto(expected)).thenReturn(expectedDto);
-
+        when(mapper.mapToDto(expected)).thenReturn(expectedDto);
         GiftCertificateDto actual = giftCertificateService.add(expectedDto);
+
         assertEquals(expectedDto, actual);
         verify(giftCertificateDao, times(1)).add(any(GiftCertificate.class));
     }
@@ -80,10 +79,8 @@ public class GiftCertificateServiceImplTest {
         GiftCertificate expected = new GiftCertificate();
         expected.setName("GiftCertificate");
 
-        when(validator.isValidName(expectedDto.getName())).thenReturn(false);
-        assertThrows(CustomException.class,() -> {
-            giftCertificateService.add(expectedDto);
-        } );
+        doThrow(AppException.class).when(validator).validate(expectedDto);
+
         verify(giftCertificateDao,  never()).add(any(GiftCertificate.class));
     }
 
@@ -96,9 +93,11 @@ public class GiftCertificateServiceImplTest {
         GiftCertificate expected = new GiftCertificate();
         expected.setName("GiftCertificate");
         expected.setId(id);
+
         when(giftCertificateDao.findOne(id)).thenReturn(Optional.of(expected));
-        when(mapper.mapEntityToDto(expected)).thenReturn(expectedDto);
+        when(mapper.mapToDto(expected)).thenReturn(expectedDto);
         GiftCertificateDto actual = giftCertificateService.find(id);
+
         assertEquals(expectedDto, actual);
         verify(giftCertificateDao, times(1)).findOne(id);
     }
@@ -106,8 +105,10 @@ public class GiftCertificateServiceImplTest {
     @Test
     public void findNegativeTest() {
         Long id = 1L;
+
         when(giftCertificateDao.findOne(id)).thenReturn(Optional.empty());
-        assertThrows(CustomException.class, () -> {
+
+        assertThrows(AppException.class, () -> {
             giftCertificateService.find(id);
         });
         verify(giftCertificateDao, times(1)).findOne(id);
@@ -120,9 +121,11 @@ public class GiftCertificateServiceImplTest {
         expectedDto.setName(name);
         GiftCertificate expected = new GiftCertificate();
         expected.setName(name);
+
         when(giftCertificateDao.findByName(name)).thenReturn(Optional.of(expected));
-        when(mapper.mapEntityToDto(expected)).thenReturn(expectedDto);
+        when(mapper.mapToDto(expected)).thenReturn(expectedDto);
         GiftCertificateDto actual = giftCertificateService.findByName(name);
+
         assertEquals(expectedDto, actual);
         verify(giftCertificateDao, times(1)).findByName(name);
     }
@@ -130,10 +133,12 @@ public class GiftCertificateServiceImplTest {
     @Test
     public void findByNameNegativeTest() {
         String name = "GiftCertificate";
+
         when(giftCertificateDao.findByName(name)).thenReturn(Optional.empty());
-        assertThrows(CustomException.class, () -> {
+        assertThrows(AppException.class, () -> {
             giftCertificateService.findByName(name);
         });
+
         verify(giftCertificateDao, times(1)).findByName(name);
     }
 
@@ -161,7 +166,7 @@ public class GiftCertificateServiceImplTest {
         when(giftCertificateDao.findAll()).thenReturn(listExpected);
         when(giftCertificateDao.getTags(expected1.getId())).thenReturn(any(List.class));
         when(giftCertificateDao.getTags(expected2.getId())).thenReturn(any(List.class));
-        when(mapper.mapListEntityToListDto(listExpected)).thenReturn(listDtoExpected);
+        when(mapper.mapToListDto(listExpected)).thenReturn(listDtoExpected);
         List<GiftCertificateDto> actual = giftCertificateService.findAll();
 
         assertEquals(listDtoExpected, actual);
@@ -193,50 +198,15 @@ public class GiftCertificateServiceImplTest {
         listDtoExpected.add(expectedDto1);
         listDtoExpected.add(expectedDto2);
 
-        when(queryMapper.mapDtoToEntity(queryDto)).thenReturn(query);
+        doNothing().when(queryValidator).validate(queryDto);
+        when(queryMapper.mapToEntity(queryDto)).thenReturn(query);
         when(giftCertificateDao.findByQuery(query)).thenReturn(listExpected);
         when(giftCertificateDao.getTags(expected1.getId())).thenReturn(any(List.class));
         when(giftCertificateDao.getTags(expected2.getId())).thenReturn(any(List.class));
-        when(mapper.mapListEntityToListDto(listExpected)).thenReturn(listDtoExpected);
+        when(mapper.mapToListDto(listExpected)).thenReturn(listDtoExpected);
         List<GiftCertificateDto> actual = giftCertificateService.findByQuery(queryDto);
 
         assertEquals(listDtoExpected, actual);
         verify(giftCertificateDao, times(1)).findByQuery(query);
     }
-
-//    @Test
-//    void updatePositiveTest() {
-//        Long id = 1L;
-//        GiftCertificateDto expectedDto = new GiftCertificateDto();
-//        expectedDto.setName("GiftCertificate");
-//        GiftCertificate expected = new GiftCertificate();
-//        expected.setName("GiftCertificate");
-//
-//        when(validator.isValidName(expectedDto.getName())).thenReturn(true);
-//        when(validator.isValidDescription(expectedDto.getDescription())).thenReturn(true);
-//        when(validator.isValidPrice(expectedDto.getPrice())).thenReturn(true);
-//        when(validator.isValidDuration(expectedDto.getDuration())).thenReturn(true);
-//        when(mapper.mapDtoToEntity(expectedDto)).thenReturn(expected);
-//        when(giftCertificateDao.update(expected, id)).thenReturn(expected);
-//        when(giftCertificateService.exist(expectedDto, id)).thenReturn(true);
-//        when(mapper.mapEntityToDto(expected)).thenReturn(expectedDto);
-//        GiftCertificateDto actual = giftCertificateService.update(expectedDto, id);
-//        assertEquals(expectedDto, actual);
-//        verify(giftCertificateDao, times(1)).update(any(GiftCertificate.class), any(Long.class));
-//    }
-//
-//    @Test
-//    void updateNegativeTest() {
-//        GiftCertificateDto expectedDto = new GiftCertificateDto();
-//        expectedDto.setName("GiftCertificate");
-//        GiftCertificate expected = new GiftCertificate();
-//        expected.setName("GiftCertificate");
-//
-//        when(validator.isValidName(expectedDto.getName())).thenReturn(false);
-//        assertThrows(CustomException.class,() -> {
-//            giftCertificateService.add(expectedDto);
-//        } );
-//        verify(giftCertificateDao,  never()).add(any(GiftCertificate.class));
-//    }
-
 }

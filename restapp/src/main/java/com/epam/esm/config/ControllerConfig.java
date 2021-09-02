@@ -20,7 +20,6 @@ import java.util.List;
 @ComponentScan("com.epam.esm")
 @EnableWebMvc
 public class ControllerConfig implements WebMvcConfigurer {
-
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
         ObjectMapper objectMapper = Jackson2ObjectMapperBuilder.json().modules(new JavaTimeModule()).build()

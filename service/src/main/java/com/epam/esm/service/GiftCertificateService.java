@@ -2,7 +2,7 @@ package com.epam.esm.service;
 
 import com.epam.esm.dto.GiftCertificateDto;
 import com.epam.esm.dto.QueryDto;
-import com.epam.esm.exeption.CustomException;
+import com.epam.esm.exeption.AppException;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ public interface GiftCertificateService {
      *
      * @param giftCertificateDto GiftCertificateDto object on basis of which is created new giftCertificate in repository
      * @return GiftCertificateDto giftCertificateDto of created in gift certificate repository
-     * @throws CustomException if fields in provided GiftCertificateDto object is not valid or giftCertificate with the same name is already
+     * @throws AppException if fields in provided GiftCertificateDto object is not valid or giftCertificate with the same name is already
      *                         in repository
      */
     GiftCertificateDto add(GiftCertificateDto giftCertificateDto);
@@ -27,7 +27,7 @@ public interface GiftCertificateService {
      *
      * @param id id of gift certificate to find
      * @return GiftCertificateDto object of tag with provided id in repository
-     * @throws CustomException if gift certificate with provided id is not present in repository
+     * @throws AppException if gift certificate with provided id is not present in repository
      */
     GiftCertificateDto find(Long id);
 
@@ -43,7 +43,7 @@ public interface GiftCertificateService {
      *
      * @param name name of tag to find
      * @return GiftCertificateDto object of gift certificate with provided name in repository
-     * @throws CustomException if tag with provided name is not present in repository
+     * @throws AppException if tag with provided name is not present in repository
      */
     GiftCertificateDto findByName(String name);
 
@@ -60,10 +60,21 @@ public interface GiftCertificateService {
      * @param id id of gift certificate to update
      * @param giftCertificateDto GiftCertificateDto object on basis of which is update giftCertificate in repository
      * @return GiftCertificateDto giftCertificateDto of updated in gift certificate repository
-     * @throws CustomException if fields in provided GiftCertificateDto object is not valid or giftCertificate is not present
+     * @throws AppException if fields in provided GiftCertificateDto object is not valid or giftCertificate is not present
      *                         in repository
      */
     GiftCertificateDto update(GiftCertificateDto giftCertificateDto, Long id);
+
+    /**
+     * Updates gift certificate fields according to provided dto object.
+     *
+     * @param id id of gift certificate to update
+     * @param giftCertificateDto GiftCertificateDto object on basis of which is update giftCertificate in repository
+     * @return GiftCertificateDto giftCertificateDto of updated in gift certificate repository
+     * @throws AppException if fields in provided GiftCertificateDto object is not valid or giftCertificate is not present
+     *                         in repository
+     */
+    GiftCertificateDto patch(GiftCertificateDto giftCertificateDto, Long id);
 
     /**
      * Checks if gift certificate that corresponds to provided GiftCertificateDto and id exists in repository.
@@ -79,6 +90,7 @@ public interface GiftCertificateService {
      * Retrieves gift certificates from repository according to provided query.
      *
      * @param queryDto QueryDto object for building search query
+     * @throws AppException if QueryDto fields is not valid
      * @return List<GiftCertificates> list of gift certificates from repository according to provided query
      */
     List<GiftCertificateDto> findByQuery(QueryDto queryDto);
